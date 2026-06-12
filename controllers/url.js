@@ -16,17 +16,19 @@ export const handleCreateShortId = async(req,res)=>{
     const result = await URL.create({
     shortId:shortId,
     redirectURL: body.url,
-    visitHistory:[]
+    visitHistory:[],
+    createdBy:req.user._id
    })
 //   return res.status(201).json({
 //     message:"success",
 //     shortId: result.shortId
 //   })
+     const allUrls = await URL.find({createdBy:req.user._id})
+    res.render("home",{
+        id:result.shortId,
+        allUrls:allUrls
+    })
    
-    // res.render("home",{
-    //     id:result.shortId,
-    //     allUrls: allUrls
-    // })
    
 }
 
